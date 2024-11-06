@@ -1,116 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime.js Example</title>
+  <title>advanced staggering • anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:title" content="anime.js">
+  <meta property="og:url" content="https://animejs.com">
+  <meta property="og:description" content="Javascript Animation Engine">
+  <meta property="og:image" content="https://animejs.com/documentation/assets/img/icons/og.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="anime.js">
+  <meta name="twitter:site" content="@juliangarnier">
+  <meta name="twitter:description" content="Javascript Animation Engine">
+  <meta name="twitter:image" content="https://animejs.com/documentation/assets/img/icons/twitter.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/img/social-media-image.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" >
+  <link href="../assets/css/animejs.css" rel="stylesheet">
+  <link href="../assets/css/documentation.css" rel="stylesheet">
+  <style>
+
+    :root {
+      font-size: 20px;
+    }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .stagger-visualizer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 32rem;
+      height: 16rem;
+    }
+
+    .dots-wrapper {
+      position: absolute;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .stagger-visualizer .dot {
+      position: relative;
+      width: calc(1rem - 8px);
+      height: calc(1rem - 8px);
+      margin: 4px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+  </style>
 </head>
 <body>
-    <!-- Include anime.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <div class="container">
-    <div class="iphone">
-      <div class="header">
-        <div class="order-summary">
-          <div class="order-status">Arriving date</div>
-          <div class="order-date">
-            19 April, 2020
-          </div>
-          <div class="order-day">
-            Friday
-          </div>
-        </div>
-        <div class="action-btn">
-          <div class="back-btn"><i class="far fa-long-arrow-left"></i></div>
-        </div>
-      </div>
-      <div class="hero-img-container">
-        <div class="triangle1"></div>
-        <div class="arc"></div>
-        <div class="pattern"></div>
-        <img src="https://i.ibb.co/qWH1nD6/undraw-Order-delivered-re-v4ab.png" class="hero-img">
-      </div>
-      <div class="order-status-container">
-        <div class="status-item first">
-          <div class="status-circle"></div>
-          <div class="status-text">
-            today
-          </div>
-        </div>
-        <div class="status-item second">
-          <div class="status-circle"></div>
-          <div class="status-text">
-            Shipped
-          </div>
-        </div>
-        <div class="status-item">
-          <div class="status-circle"></div>
-          <div class="status-text green">
-            <span>Out</span><span>for delivery</span>
-          </div>
-        </div>
-        <div class="status-item">
-          <div class="status-circle"></div>
-          <div class="status-text green">
-            <span>Ariving</span>
-            <span>04&nbsp;-&nbsp;21</span>
-          </div>
-        </div>
-      </div>
-      <div class="order-details-container">
-        <div class="odc-header">
-          <div class="cta-text">See your product details</div>
-          <div class="cta-button-container">
-            <button class="cta-button">View</button>
-          </div>
-        </div>
-        <div class="odc-wrapper">
-          <div class="odc-header-line">
-            Your order details
-          </div>
-          <div class="odc-header-details">
-            Your product details (order 040-904-790)
-          </div>
-          <div class="product-container">
-            <div class="product">
-              <div class="product-photo">
-                <img src="https://s3.eu-central-1.amazonaws.com/sneakerjagers.com/products/396x396/92074.jpg" class="img-photo">
-              </div>
-              <div class="product-desc">
-                <span>SkullCandy 232 Wireless Headphones</span>
-                <span>9740 INR</span>
-              </div>
-            </div>
-            <div class="product">
-              <div class="product-photo">
-                <img src="https://s3.eu-central-1.amazonaws.com/sneakerjagers.com/products/396x396/77674.jpg" class="img-photo">
-              </div>
-              <div class="product-desc">
-                <span>Acer Aspire 4830t</span>
-                <span>46500 INR</span>
-              </div>
-            </div>
-          </div>
-          <a href="order-cancellationReqtoken12.netlify.app">
-            <div class="cancellation">
-              Request Cancellation
-            </div>
-          </a>
 
-          <div class="shipping-desc">Your Shipping Address</div>
-
-          <div class="shipping-address">
-            Spectrum Metro<br>
-            Noida<br>
-            201305<br>
-            INDIA
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <div class="stagger-visualizer">
+    <div class="dots-wrapper"></div>
   </div>
-  </div>
+
 </body>
+<script type="module">
+
+  import anime from '../../src/index.js';
+
+  var advancedStaggeringAnimation = (function() {
+
+    var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
+    var dotsWrapperEl = staggerVisualizerEl.querySelector('.dots-wrapper');
+    var dotsFragment = document.createDocumentFragment();
+    var grid = [32, 16];
+    var cellSize = 1;
+    var numberOfElements = grid[0] * grid[1];
+    var animation;
+    var paused = true;
+
+    for (var i = 0; i < numberOfElements; i++) {
+      var dotEl = document.createElement('div');
+      dotEl.classList.add('dot');
+      dotsFragment.appendChild(dotEl);
+    }
+
+    dotsWrapperEl.appendChild(dotsFragment);
+
+    var index = anime.random(0, numberOfElements-1);
+    var nextIndex = 0;
+
+    function play() {
+
+      paused = false;
+      if (animation) animation.pause();
+
+      nextIndex = anime.random(0, numberOfElements-1);
+
+      var saturation = 75;
+
+      var colorStart = anime.random(0, 256);
+      var colorEnd = anime.random(0, 256);
+      var colorRangeValue = [colorStart, colorEnd];
+      var luminosityStart = anime.random(60, 80);
+      var luminosityEnd = anime.random(20, 40);
+      var luminosityRangeValue = [luminosityStart, luminosityEnd];
+
+      function staggeredGridColors(el, i, total) {
+        var hue = Math.round(anime.stagger(colorRangeValue, {grid: grid, from: index})(el, i, total));
+        var luminosity = Math.round(anime.stagger(luminosityRangeValue, {grid: grid, from: index})(el, i, total));
+        return 'hsl(' + hue + ', ' + saturation + '%, ' + luminosity + '%)';
+      }
+
+      animation = anime({
+        targets: '.stagger-visualizer .dot',
+        keyframes: [
+          {
+            zIndex: function(el, i, total) {
+              return Math.round(anime.stagger([numberOfElements, 0], {grid: grid, from: index})(el, i, total));
+            },
+            translateX: anime.stagger('-.001rem', {grid: grid, from: index, axis: 'x'}),
+            translateY: anime.stagger('-.001rem', {grid: grid, from: index, axis: 'y'}),
+            duration: 200
+          }, {
+            translateX: anime.stagger('.075rem', {grid: grid, from: index, axis: 'x'}),
+            translateY: anime.stagger('.075rem', {grid: grid, from: index, axis: 'y'}),
+            scale: anime.stagger([2, .2], {grid: grid, from: index}),
+            backgroundColor: staggeredGridColors,
+            duration: 450
+          }, {
+            translateX: 0,
+            translateY: 0,
+            scale: 1,
+            duration: 500,
+          }
+        ],
+        delay: anime.stagger(60, {grid: grid, from: index}),
+        easing: 'easeInOutQuad',
+        complete: play
+      }, 30)
+
+      index = nextIndex;
+
+    }
+
+    play();
+
+  })();
+
+</script>
 </html>
