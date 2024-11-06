@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="anime.min.js">
-        anime({
-  targets: 'div',
-  translateX: 250,
-  rotate: '1turn',
-  backgroundColor: '#FFF',
-  duration: 800
-    });
-    </script>
+    <script src="anime.min.js"></script>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            margin: 50px;
+        }
+    </style>
 </head>
 <body>
- 
+    <div></div>
+
+    <script>
+            anime({
+                targets: 'div',
+                translateX: 250,
+                rotate: '1turn',
+                backgroundColor: '#FFF',
+                duration: 800
+            });
+    </script>
 </body>
 </html>
